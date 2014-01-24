@@ -52,6 +52,11 @@ public class Test51Job {
 	        submitButton.setAttribute("type", "submit");
 	        loginForm.appendChild(submitButton);
 	        
+	        webClient.getOptions().setThrowExceptionOnScriptError(false);
+	        webClient.getOptions().setPrintContentOnFailingStatusCode(false);
+	        webClient.getOptions().setThrowExceptionOnScriptError(false);
+	        webClient.getOptions().setUseInsecureSSL(true);
+	        
 	        HtmlPage loginAfterPage = submitButton.click();
 	        
 	        //执行按钮出发的js事件
@@ -61,8 +66,8 @@ public class Test51Job {
 	        HtmlPage loginAfterPage = (HtmlPage) sr.getNewPage(); 
 	        ***/
 	        
-	        log.debug(loginAfterPage.getTitleText());
-	        log.debug(loginAfterPage.getTextContent());
+	        System.out.print("title:"+loginAfterPage.getTitleText());
+	        System.out.print("content:"+loginAfterPage.asText());
 			
 		} catch (FailingHttpStatusCodeException e) {
 			
