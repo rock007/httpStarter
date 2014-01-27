@@ -15,8 +15,12 @@ import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;  
 import com.gargoylesoftware.htmlunit.ScriptResult;  
 import com.gargoylesoftware.htmlunit.WebClient;  
+import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.DomNodeList;
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlOption;  
 import com.gargoylesoftware.htmlunit.html.HtmlPage;  
@@ -65,26 +69,54 @@ public class Test51Job {
 	        
 	        HtmlPage loginAfterPage = (HtmlPage) sr.getNewPage(); 
 	        ***/
-	        
+	        //登陆后首页
 	        System.out.print("title:"+loginAfterPage.getTitleText());
-	        System.out.print("content:"+loginAfterPage.asText());
-			
+	       // System.out.print("content:"+loginAfterPage.asText());
+	        //获取简历列表
+	        List<?> nodeList=  loginAfterPage.getByXPath("/html/body/div/div[3]/div[2]");
+	        System.out.println(nodeList);
+	        
+		    List<?> linkList= loginAfterPage.getByXPath( "/html/body/div/div[3]/div[2]/ul/li[3]/a");
+		    System.out.println(linkList);
+		    
+		    if(linkList.size()>=1){
+		    	   
+		    	   webClient.getOptions().setJavaScriptEnabled(false);
+		    	   
+		    	   HtmlAnchor linkE1=(HtmlAnchor)linkList.get(0);
+		    	   
+		    	   HtmlPage resumeManagerPage=  linkE1.click();
+		    	   
+		    	   DomElement  div_recon_wbg= resumeManagerPage.getElementById("recon_wbg");
+		    	   List<?> resumelinkList=div_recon_wbg.getByXPath("//table/tbody//tr[2]/td[9]/a");
+		    	   
+		    	   System.out.println(resumelinkList);
+		    	   
+		    	   if(resumelinkList.size()>=1){
+		    		   
+		    		   HtmlAnchor resumeE1=(HtmlAnchor)resumelinkList.get(0);
+		    		
+		    		   WebResponse rep= resumeE1.click().getWebResponse();
+			    	   
+			    	   System.out.println("resume :"+rep.getContentAsString());
+		    	   }
+		    	   
+		    	   
+		    	   
+		       }
+	        
+	        
 		} catch (FailingHttpStatusCodeException e) {
 			
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
 			
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			
 			e.printStackTrace();
 		}
-		
-
-		
-		//获取简历
-		
-		
+				
 	}
 
 }
