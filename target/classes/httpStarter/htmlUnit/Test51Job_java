@@ -1,0 +1,122 @@
+package httpStarter;
+
+
+import java.io.FileOutputStream;  
+import java.io.IOException;  
+import java.io.InputStream;  
+import java.io.OutputStream;  
+import java.net.MalformedURLException;  
+import java.util.List;  
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import org.htmlunit.FailingHttpStatusCodeException;  
+import org.htmlunit.NicelyResynchronizingAjaxController;  
+import org.htmlunit.ScriptResult;  
+import org.htmlunit.WebClient;  
+import org.htmlunit.WebResponse;
+import org.htmlunit.html.DomElement;
+import org.htmlunit.html.DomNodeList;
+import org.htmlunit.html.HtmlAnchor;
+import org.htmlunit.html.HtmlButton;
+import org.htmlunit.html.HtmlElement;
+import org.htmlunit.html.HtmlForm;
+import org.htmlunit.html.HtmlOption;  
+import org.htmlunit.html.HtmlPage;  
+import org.htmlunit.html.HtmlPasswordInput;
+import org.htmlunit.html.HtmlSelect;  
+import org.htmlunit.html.HtmlSubmitInput;
+import org.htmlunit.html.HtmlTextInput;
+
+public class Test51Job {
+
+    private static Log log = LogFactory.getLog(Test51Job.class); 
+    
+	public static void main(String[] args) {
+		
+		//��ȡ��½ҳ	    
+	    final WebClient webClient = new WebClient();
+        HtmlPage loginPage;
+		try {
+			
+			loginPage = webClient.getPage("http://my.51job.com/my/My_SignIn.php");
+	        System.out.println(loginPage.getTitleText());
+			
+			//��½
+	        HtmlForm loginForm = loginPage.getFormByName("signin");
+
+	        HtmlTextInput usernameTF = loginForm.getInputByName("username");
+	        HtmlPasswordInput userpwdTF = loginForm.getInputByName("userpwd");
+	        
+	        usernameTF.setValueAttribute("wenhua1225@hotmail.com");
+	        userpwdTF.setValueAttribute("spring1999");
+	        
+	        HtmlButton submitButton = (HtmlButton)loginPage.createElement("button");
+	        submitButton.setAttribute("type", "submit");
+	        loginForm.appendChild(submitButton);
+	        
+	        webClient.getOptions().setThrowExceptionOnScriptError(false);
+	        webClient.getOptions().setPrintContentOnFailingStatusCode(false);
+	        webClient.getOptions().setThrowExceptionOnScriptError(false);
+	        webClient.getOptions().setUseInsecureSSL(true);
+	        
+	        HtmlPage loginAfterPage = submitButton.click();
+	        
+	        //ִ�а�ť������js�¼�
+	        /***
+	        ScriptResult sr = loginPage.executeJavaScript("javascript:chkSignIn('CN', 'https://mylogin.51job.com');");  
+	        
+	        HtmlPage loginAfterPage = (HtmlPage) sr.getNewPage(); 
+	        ***/
+	        //��½����ҳ
+	        System.out.print("title:"+loginAfterPage.getTitleText());
+	       // System.out.print("content:"+loginAfterPage.asText());
+	        //��ȡ�����б�
+	        List<?> nodeList=  loginAfterPage.getByXPath("/html/body/div/div[3]/div[2]");
+	        System.out.println(nodeList);
+	        
+		    List<?> linkList= loginAfterPage.getByXPath( "/html/body/div/div[3]/div[2]/ul/li[3]/a");
+		    System.out.println(linkList);
+		    
+		    if(linkList.size()>=1){
+		    	   
+		    	   webClient.getOptions().setJavaScriptEnabled(false);
+		    	   
+		    	   HtmlAnchor linkE1=(HtmlAnchor)linkList.get(0);
+		    	   
+		    	   HtmlPage resumeManagerPage=  linkE1.click();
+		    	   
+		    	   DomElement  div_recon_wbg= resumeManagerPage.getElementById("recon_wbg");
+		    	   List<?> resumelinkList=div_recon_wbg.getByXPath("//table/tbody//tr[2]/td[9]/a");
+		    	   
+		    	   System.out.println(resumelinkList);
+		    	   
+		    	   if(resumelinkList.size()>=1){
+		    		   
+		    		   HtmlAnchor resumeE1=(HtmlAnchor)resumelinkList.get(0);
+		    		
+		    		   WebResponse rep= resumeE1.click().getWebResponse();
+			    	   
+			    	   System.out.println("resume :"+rep.getContentAsString());
+		    	   }
+		    	   
+		    	   
+		    	   
+		       }
+	        
+	        
+		} catch (FailingHttpStatusCodeException e) {
+			
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			
+			e.printStackTrace();
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+				
+	}
+
+}

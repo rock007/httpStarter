@@ -3,96 +3,164 @@
   <groupId>org.springframework.samples</groupId>
   <artifactId>httpStarter</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  
   <properties>
-
-		<!-- Generic properties -->
-		<java.version>1.6</java.version>
+		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<!-- Spring -->
-		<spring-framework.version>3.2.3.RELEASE</spring-framework.version>
-
-		<!-- Hibernate / JPA -->
-		<hibernate.version>4.2.1.Final</hibernate.version>
-
-		<!-- Logging -->
-		<logback.version>1.0.13</logback.version>
-		<slf4j.version>1.7.5</slf4j.version>
-
-		<!-- Test -->
-		<junit.version>4.11</junit.version>
-
+        <dropwizard.version>2.0.9</dropwizard.version>
+        <webmagic.version>0.8.0</webmagic.version>
 	</properties>
-	
+	 <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-bom</artifactId>
+                <version>${dropwizard.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 	<dependencies>
-		<!-- Spring and Transactions -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring-framework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${spring-framework.version}</version>
-		</dependency>
 
-		<!-- Logging with SLF4J & LogBack -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- Hibernate -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-
-		
-		<!-- Test Artifacts -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring-framework.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
+ 		<dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-core</artifactId>
+        </dependency>
+        <dependency>
+    		<groupId>io.dropwizard</groupId>
+    		<artifactId>dropwizard-client</artifactId>
 		</dependency>
 		
-<dependency>
-	<groupId>commons-httpclient</groupId>
-	<artifactId>commons-httpclient</artifactId>
-	<version>3.1</version>
-</dependency>
+		<dependency>
+    		<groupId>io.dropwizard</groupId>
+    		<artifactId>dropwizard-jdbi3</artifactId>
+    	</dependency>
+
+		<dependency>
+  			<groupId>com.squareup.okhttp3</groupId>
+  			<artifactId>okhttp</artifactId>
+  			<version>4.9.3</version>
+		</dependency>
+		<dependency>
+		   <groupId>com.google.code.gson</groupId>
+		   <artifactId>gson</artifactId>
+		   <version>2.9.0</version>
+		</dependency>
+	
+        <dependency>
+        	<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.2.6</version>
+        </dependency>
+        <dependency>
+          	<groupId>mysql</groupId>
+          	<artifactId>mysql-connector-java</artifactId>
+         	<version>8.0.25</version>
+        </dependency>
+
+	    <dependency>
+    		<groupId>commons-httpclient</groupId>
+    		<artifactId>commons-httpclient</artifactId>
+    		<version>3.1</version>
+		</dependency>
+		 <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+    
+		<!-- csv -->
+		<dependency>
+  			<groupId>org.apache.commons</groupId>
+  			<artifactId>commons-csv</artifactId>
+  			<version>1.9.0</version>
+		</dependency>
+		
+			<!-- 
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
             
- <dependency>
-	<groupId>commons-lang</groupId>
-	<artifactId>commons-lang</artifactId>
-	<version>2.6</version>
-</dependency>
-            
- <dependency>
-	<groupId>net.sourceforge.htmlunit</groupId>
-	<artifactId>htmlunit</artifactId>
-	<version>2.13</version>
-</dependency>
-            
-            
+ 		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		-->
+		      <!--       
+ 		<dependency>
+			<groupId>net.sourceforge.htmlunit</groupId>
+			<artifactId>htmlunit</artifactId>
+			<version>2.70.0</version>
+		</dependency>
+ 	   --> 
+		<dependency>
+    		<groupId>org.htmlunit</groupId>
+    		<artifactId>htmlunit</artifactId>
+    		<version>3.1.0</version>
+		</dependency>
+      
+       
+       <dependency>
+    		<groupId>us.codecraft</groupId>
+    		<artifactId>webmagic-core</artifactId>
+    		<version>${webmagic.version}</version>
+		</dependency>
+		<dependency>
+    		<groupId>us.codecraft</groupId>
+    		<artifactId>webmagic-extension</artifactId>
+    		<version>${webmagic.version}</version>
+		</dependency>
+
+		<dependency>
+            <groupId>org.mapdb</groupId>
+            <artifactId>mapdb</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+     
+        
 	</dependencies>	
+	  <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <createDependencyReducedPom>true</createDependencyReducedPom>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>${mainClass}</mainClass>
+                        </transformer>
+                    </transformers>
+                    <!-- exclude signed Manifests -->
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+            </plugin>                  
+        </plugins>
+    </build>
 </project>
